@@ -3,17 +3,29 @@
 // A Trie has a root Node which is the base of the tree.
 // Each subsequent Node has a letter and children, which are
 // nodes that have letter values associated with them.
+/*
+实现Trie树数据结构
+
+Trie树有一个根节点，他下面的节点都有一个字母和子节点列表，并且可能会关联数据
+*/
 package trie
 
 import "sort"
 
 type Node struct {
+	// 节点的值
 	val      rune
+	// 是否是一个数据节点
 	term     bool
+	// 节点在Trie中的层数
 	depth    int
+	// 节点如果有数据，对应的数据
 	meta     interface{}
+	// 节点的mask，这里在模糊搜索的时候会提高速度
 	mask     uint64
+	// 父节点
 	parent   *Node
+	// 子节点map 节点值 => 节点
 	children map[rune]*Node
 }
 
@@ -22,11 +34,19 @@ type Trie struct {
 	size int
 }
 
+/*
+排序结构，开始
+根据字符串长度去排序
+*/
 type ByKeys []string
 
 func (a ByKeys) Len() int           { return len(a) }
 func (a ByKeys) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByKeys) Less(i, j int) bool { return len(a[i]) < len(a[j]) }
+/*
+排序结构，结束
+*/
+
 
 const nul = 0x0
 
